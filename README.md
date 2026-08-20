@@ -69,7 +69,7 @@ CLI behavior follows the [agent-browser command reference](https://agent-browser
 
 ## 适用版本
 
-- deepseek-harness `0.1.0-rc.7`, commit `99f6f02`
+- deepseek-harness `0.1.0-rc.8`, commit `141eb6f`（`dsh-v0.1.0-rc.8`）；rc.7 亦可用，`^0.1.0-rc.7` peer 范围覆盖
 - Node.js `>=22`
-- `@deepseek-ai/dsh-tools ^0.1.0-rc.7`
+- `@deepseek-ai/dsh-tools ^0.1.0-rc.7`（覆盖 rc.8）
 - Tested CLI: verify the installed version with `agent-browser --version`; the adapter relies on the documented JSON-capable core commands and global `--session` option.
