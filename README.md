@@ -17,9 +17,25 @@ Install this plugin into a harness profile from the GitHub repository:
 dsh plugin --profile headless add github:Lin-A1/dsh-agent-browser
 ```
 
-The harness CLI forwards plugin management to pnpm in the profile directory. A GitHub install fetches sources, so pnpm runs the package's `prepare` script to build `lib/`; pnpm ≥10 blocks that until you allow it — copy the exact package key pnpm prints into the profile's `pnpm-workspace.yaml` under `allowBuilds` (e.g. `allowBuilds: { dsh-agent-browser: true }`), then re-run the command. For trusted installs, pin a commit: `github:Lin-A1/dsh-agent-browser#<sha>`.
+The harness CLI forwards plugin management to pnpm in the profile directory. A GitHub install fetches sources, so pnpm runs the package's `prepare` script to build `lib/`. pnpm >=10 blocks a git dependency's build script until you allow it: on the first run dsh prints the exact package key to allow - copy it into the profile's `pnpm-workspace.yaml` under `allowBuilds`, then re-run the command.
 
-Local development still works by adding the working tree directly:
+```sh
+# 1. First attempt - dsh prints the exact allow key:
+dsh plugin --profile headless add github:Lin-A1/dsh-agent-browser
+#    ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED ... add the package to "allowBuilds"
+
+# 2. Allow the build in the profile (use the exact key pnpm printed):
+#    $DSH_HOME/profiles/headless/pnpm-workspace.yaml:
+#    allowBuilds:
+#      dsh-agent-browser@https://codeload.github.com/Lin-A1/dsh-agent-browser/tar.gz/<sha>: true
+
+# 3. Re-run:
+dsh plugin --profile headless add github:Lin-A1/dsh-agent-browser
+```
+
+For trusted installs, pin a commit: `github:Lin-A1/dsh-agent-browser#<sha>`.
+
+Local development still works by adding the working tree directly (no allowlist step, `prepare` still runs):
 
 ```sh
 dsh plugin --profile headless add ./path/to/dsh-agent-browser
