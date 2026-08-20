@@ -11,13 +11,19 @@ pnpm add -g agent-browser
 agent-browser --version
 ```
 
-Install this plugin in a harness profile:
+Install this plugin into a harness profile from the GitHub repository:
+
+```sh
+dsh plugin --profile headless add github:Lin-A1/dsh-agent-browser
+```
+
+The harness CLI forwards plugin management to pnpm in the profile directory. A GitHub install fetches sources, so pnpm runs the package's `prepare` script to build `lib/`; pnpm ≥10 blocks that until you allow it — copy the exact package key pnpm prints into the profile's `pnpm-workspace.yaml` under `allowBuilds` (e.g. `allowBuilds: { dsh-agent-browser: true }`), then re-run the command. For trusted installs, pin a commit: `github:Lin-A1/dsh-agent-browser#<sha>`.
+
+Local development still works by adding the working tree directly:
 
 ```sh
 dsh plugin --profile headless add ./path/to/dsh-agent-browser
 ```
-
-For a GitHub install, use `dsh plugin --profile headless add github:Lin-A1/dsh-agent-browser` and allow the package build in the profile when prompted. The current harness CLI exposes plugin management as `dsh plugin`; it forwards the remaining arguments to pnpm.
 
 ## Tools
 
