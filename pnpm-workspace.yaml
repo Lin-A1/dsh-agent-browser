@@ -1,6 +1,10 @@
 packages:
   - .
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@deepseek-ai/dsh-brand@0.1.2-rc.1'
+  - '@deepseek-ai/dsh-tools@0.1.2-rc.1'
+  - '@deepseek-ai/dsh-util-values@0.1.2-rc.1'
 onlyBuiltDependencies:
   - esbuild
